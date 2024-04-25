@@ -21,8 +21,10 @@ Game boards with 4, 5, or 6 rows are supported.
 ### Python
 
 Requires Python 3.x (https://www.python.org/downloads/)
-`Usage: python3 peg-game-solver.py [NUM_ROWS]`
-`Example: python3 peg-game-solver.py 5`
+```
+Usage: python3 peg-game-solver.py [NUM_ROWS]
+Example: python3 peg-game-solver.py 5
+```
 
 ### C
 
