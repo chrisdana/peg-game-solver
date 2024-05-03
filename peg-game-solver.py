@@ -16,7 +16,7 @@
 import networkx as nx
 import sys
 
-def triangular_number(n):
+def triangular_number(n: int) -> int:
     """
     Computes the triangular number T(n).
     
@@ -28,7 +28,7 @@ def triangular_number(n):
     """
     return n * (n + 1) // 2
 
-def generate_triangle_graph(n):
+def generate_triangle_graph(n: int) -> nx.Graph:
     """
     Generates a graph representing T(n) objects arranged in an equilateral triangle.
     
@@ -61,7 +61,7 @@ def generate_triangle_graph(n):
     return graph
 
 
-def get_valid_moves(graph, bs):
+def get_valid_moves(graph: nx.Graph, bs: [bool]) -> [(int, int, int)]:
     """
     Returns an array of all valid moves of the current board state
     
@@ -116,7 +116,7 @@ def get_valid_moves(graph, bs):
                 moves.append((src, mid, dest))
     return moves
             
-def solve(graph, bs):
+def solve(graph: nx.Graph, bs: [bool]) -> bool:
     """
     Tries to solve a given triangle puzzle by depth-first search
     
@@ -170,7 +170,7 @@ def solve(graph, bs):
     # Valid moves led to board states we have already seen
     return False
 
-def print_bs(bs, n_rows):
+def print_bs(bs: [bool], n_rows: int) -> None:
     """
     Prints the board state
 
@@ -179,7 +179,7 @@ def print_bs(bs, n_rows):
         n_rows (Int): Number of rows in the triangle
         
     Returns:
-        Void
+        None
     """
     next_row_idx = 0
     next_row_len = 1
@@ -193,13 +193,21 @@ def print_bs(bs, n_rows):
         print("%s " %("O" if bs[i] else "X"), end="")
     print("\n")
         
-def usage():
+def usage() -> None:
     print("Error: Argument invalid.", file=sys.stderr)
     print("First argument must be number of rows in the triangle", file=sys.stderr)
     print("The number of rows must be in the range 4-6", file=sys.stderr)
     print("Example: python3 peg-game-solver.py 6", file=sys.stderr)
 
-if __name__ == '__main__':
+def main() -> int:
+    global FINAL_MOVE_LIST
+    global N_MOVES
+    global SEEN
+
+    FINAL_MOVE_LIST = []
+    N_MOVES = 0
+    SEEN = set()
+
     # Number of levels in the triangle (only works for N = [4,5,6])
     try:
         n_rows = int(sys.argv[1])
@@ -209,9 +217,6 @@ if __name__ == '__main__':
         usage()
         sys.exit(1)
     
-    FINAL_MOVE_LIST = []
-    N_MOVES = 0
-    SEEN = set()
     triangle_graph = generate_triangle_graph(n_rows)
       
     # Initial board states can be reduced due to symmetry
@@ -236,3 +241,7 @@ if __name__ == '__main__':
             print("No solution found from this starting position.\n")
 
     print("Unable to solve puzzle. ")
+    sys.exit(0)
+
+if __name__ == '__main__':
+    main()
